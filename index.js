@@ -130,7 +130,8 @@ Card.prototype.onClick = function(e) {
   e.preventDefault();
   console.log('click', this.word);
 
-  this.el.classList.add('revealed');
+  var cssClass = $selectedView === VIEWS.TABLE ? 'revealed' : 'selected';
+  this.el.classList.add(cssClass);
 };
 
 Card.prototype.reveal = function() {

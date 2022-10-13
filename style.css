@@ -118,3 +118,7 @@ html, body {
 .revealed.person-3 {
   background: #8e44ad;
 }
+
+.card.selected {
+  background: #27ae60;
+}
