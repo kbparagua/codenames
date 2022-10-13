@@ -242,4 +242,3 @@ window.onload = function() {
     $table.revealSolution();
   };
 };
-
