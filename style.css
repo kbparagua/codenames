@@ -1,6 +1,49 @@
 html, body {
   height: 100%;
+  background: #2c3e50;
+  color: #ecf0f1;
 }
+
+* {
+  box-sizing: border-box;
+}
+
+#main-screen {
+  width: 50%;
+  margin: auto;
+  margin-top: 30%;
+  padding: 3px;
+}
+
+#main-screen input {
+  width: 100%;
+  display: block;
+  font-size: 48px;
+  text-align: center;
+}
+
+#main-screen a {
+  display: block;
+  font-size: 24px;
+  padding: 12px 6px;
+  text-align: center;
+  width: 100%;
+
+  text-decoration: none;
+  color: #ecf0f1;
+}
+
+#main-screen #join-game {
+  background: #27ae60;
+  margin-top: 12px;
+}
+
+#main-screen #new-game {
+  background: #3498db;
+  margin-top: 48px;
+}
+
+/* END of main-screen */
 
 .row {
   width: 100%;

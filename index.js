@@ -166,8 +166,8 @@ var game = new Game();
 game.start();
 
 window.onload = function() {
-  var table = new Table(game);
-  table.addCards();
+  // var table = new Table(game);
+  // table.addCards();
 };
 
 
