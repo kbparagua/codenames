@@ -187,19 +187,20 @@ window.onload = function() {
 
   function hideMainScreen() {
     document.getElementById('main-screen').classList.add('hide');
+    document.getElementById('view-selection-screen').classList.remove('hide');
   };
 
   document.getElementById('join-game').onclick = function(e) {
     e.preventDefault();
     var code = getCode();
     hideMainScreen();
-    joinGame(code);
+    // joinGame(code);
   };
 
   document.getElementById('new-game').onclick = function(e) {
     e.preventDefault();
     hideMainScreen();
-    newGame();
+    // newGame();
   };
 };
 
