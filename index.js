@@ -13,9 +13,9 @@ var PERSON_TYPES = {
   ASSASSIN: 3
 };
 
-function Game() {
+function Game(code) {
   this.words = window.WORDS.slice(0);
-  this.code = this.generateCode();
+  this.code = code;
   this.randomizer = new Math.seedrandom(this.code);
   this.selectedWords = [];
   this.people = [];
@@ -102,10 +102,6 @@ Game.prototype.getRandomWord = function() {
   return word;
 };
 
-Game.prototype.generateCode = function() {
-  // 6 digit game code.
-  return (Math.random() + 1).toString().substring(2, 8);
-};
 
 function Card(word, person) {
   this.word = word;
@@ -157,17 +153,53 @@ Table.prototype.addCards = function() {
   }
 };
 
-Table.prototype.createCard = function() {
 
+function generateGameCode() {
+  // 6 digit game code.
+  return (Math.random() + 1).toString().substring(2, 8);
 };
 
+function startGame(code) {
+  var game = new Game(code);
+  game.start();
 
-var game = new Game();
-game.start();
+  var table = new Table(game);
+  table.addCards();
+}
 
+function joinGame(code) {
+  console.log('join game!', code);
+  startGame(code);
+}
+
+function newGame() {
+  console.log('new game!');
+  var code = generateGameCode();
+  startGame(code);
+}
+
+
+// Main screen
 window.onload = function() {
-  // var table = new Table(game);
-  // table.addCards();
-};
+  function getCode() {
+    return document.getElementById('main-screen').getElementsByTagName('input')[0].value.trim();
+  }
 
+  function hideMainScreen() {
+    document.getElementById('main-screen').classList.add('hide');
+  };
+
+  document.getElementById('join-game').onclick = function(e) {
+    e.preventDefault();
+    var code = getCode();
+    hideMainScreen();
+    joinGame(code);
+  };
+
+  document.getElementById('new-game').onclick = function(e) {
+    e.preventDefault();
+    hideMainScreen();
+    newGame();
+  };
+};
 
