@@ -142,6 +142,7 @@ Card.prototype.reveal = function() {
 function Table(game) {
   this.game = game;
   this.cards = [];
+  this.el = document.getElementById('table');
 }
 
 Table.prototype.addCards = function() {
@@ -159,7 +160,7 @@ Table.prototype.addCards = function() {
       row.append( card.render() );
     }
 
-    document.body.append(row);
+    this.el.append(row);
   }
 };
 
