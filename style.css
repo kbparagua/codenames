@@ -103,18 +103,18 @@ html, body {
   font-size: 24px;
 }
 
-.person-0 {
+.revealed.person-0 {
   background: #e74c3c;
 }
 
-.person-1 {
+.revealed.person-1 {
   background: #3498db;
 }
 
-.person-2 {
+.revealed.person-2 {
   background: #f1c40f;
 }
 
-.person-3 {
+.revealed.person-3 {
   background: #8e44ad;
 }

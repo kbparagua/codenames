@@ -13,6 +13,9 @@ var PERSON_TYPES = {
   ASSASSIN: 3
 };
 
+var VIEWS = { TABLE: 0, SOLUTION: 1 };
+var $selectedView = null;
+
 function Game(code) {
   this.words = window.WORDS.slice(0);
   this.code = code;
@@ -130,9 +133,14 @@ Card.prototype.onClick = function(e) {
   this.el.classList.add('revealed');
 };
 
+Card.prototype.reveal = function() {
+  this.el.classList.add('revealed');
+};
+
 
 function Table(game) {
   this.game = game;
+  this.cards = [];
 }
 
 Table.prototype.addCards = function() {
@@ -144,6 +152,7 @@ Table.prototype.addCards = function() {
 
     for (var c = 0; c < COLS; c++) {
       var card = new Card(this.game.selectedWords[count], this.game.people[count]);
+      this.cards.push(card);
 
       count++;
       row.append( card.render() );
@@ -153,18 +162,26 @@ Table.prototype.addCards = function() {
   }
 };
 
+Table.prototype.revealSolution = function() {
+  for (var i = 0, n = this.cards.length; i < n; i++) {
+    var card = this.cards[i];
+    card.reveal();
+  }
+};
+
 
 function generateGameCode() {
   // 6 digit game code.
   return (Math.random() + 1).toString().substring(2, 8);
 };
 
+var $table = null;
+
 function startGame(code) {
   var game = new Game(code);
   game.start();
 
-  var table = new Table(game);
-  table.addCards();
+  $table = new Table(game);
 }
 
 function joinGame(code) {
@@ -181,26 +198,46 @@ function newGame() {
 
 // Main screen
 window.onload = function() {
+  var mainScreen = document.getElementById('main-screen');
+  var viewSelectionScreen = document.getElementById('view-selection-screen');
+
   function getCode() {
-    return document.getElementById('main-screen').getElementsByTagName('input')[0].value.trim();
+    return mainScreen.getElementsByTagName('input')[0].value.trim();
   }
 
   function hideMainScreen() {
-    document.getElementById('main-screen').classList.add('hide');
-    document.getElementById('view-selection-screen').classList.remove('hide');
+    mainScreen.classList.add('hide');
+    viewSelectionScreen.classList.remove('hide');
   };
 
   document.getElementById('join-game').onclick = function(e) {
     e.preventDefault();
     var code = getCode();
     hideMainScreen();
-    // joinGame(code);
+    joinGame(code);
   };
 
   document.getElementById('new-game').onclick = function(e) {
     e.preventDefault();
     hideMainScreen();
-    // newGame();
+    newGame();
+  };
+
+  document.getElementById('show-table').onclick = function(e) {
+    e.preventDefault();
+    $selectedView = VIEWS.TABLE;
+
+    viewSelectionScreen.classList.add('hide');
+    $table.addCards();
+  };
+
+  document.getElementById('show-solution').onclick = function(e) {
+    e.preventDefault();
+    $selectedView = VIEWS.SOLUTION;
+
+    viewSelectionScreen.classList.add('hide');
+    $table.addCards();
+    $table.revealSolution();
   };
 };
 
