@@ -107,6 +107,67 @@ Game.prototype.generateCode = function() {
   return (Math.random() + 1).toString().substring(2, 8);
 };
 
+function Card(word, person) {
+  this.word = word;
+  this.person = person;
+  this.el = null;
+}
+
+Card.prototype.render = function() {
+  this.el = document.createElement('div');
+  this.el.classList.add('card');
+  this.el.classList.add('person-' + this.person);
+
+  var a = document.createElement('a');
+  a.href = '#';
+  a.innerText = this.word;
+  a.onclick = this.onClick.bind(this);
+
+  this.el.append(a);
+  return this.el;
+};
+
+Card.prototype.onClick = function(e) {
+  e.preventDefault();
+  console.log('click', this.word);
+
+  this.el.classList.add('revealed');
+};
+
+
+function Table(game) {
+  this.game = game;
+}
+
+Table.prototype.addCards = function() {
+  var count = 0;
+
+  for (var r = 0; r < ROWS; r++) {
+    var row = document.createElement('div');
+    row.classList.add('row');
+
+    for (var c = 0; c < COLS; c++) {
+      var card = new Card(this.game.selectedWords[count], this.game.people[count]);
+
+      count++;
+      row.append( card.render() );
+    }
+
+    document.body.append(row);
+  }
+};
+
+Table.prototype.createCard = function() {
+
+};
+
 
 var game = new Game();
 game.start();
+
+window.onload = function() {
+  var table = new Table(game);
+  table.addCards();
+};
+
+
